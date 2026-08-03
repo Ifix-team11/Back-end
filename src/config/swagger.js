@@ -1,0 +1,24 @@
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Fixit API",
+      version: "1.0.0",
+      description: "Fixit Backend API Documentation",
+    },
+  },
+  apis: ["./src/modules/**/*.routes.js"],
+};
+
+const swaggerSpec = swaggerJsdoc(options);
+
+console.log("Swagger generated:");
+console.log(swaggerSpec);
+
+module.exports = {
+  swaggerUi,
+  swaggerSpec,
+};

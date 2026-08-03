@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CUSTOMER
+  TECHNICIAN
+  COMPANY
+  ADMIN
+}
+
+model User {
+  id            String  @id @default(uuid())
+  fullName      String
+  phone         String  @unique
+  password      String
+  role          Role
+  howDidYouHear String?
+
+  technician    Technician?
+  companyProfile CompanyProfile?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Technician {
+  id String @id @default(uuid())
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  specialization  String
+  city            String
+  detailsLocation String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PasswordResetOtp {
+  id         String   @id @default(uuid())
+  phone      String
+  otp        String
+  expiresAt  DateTime
+  isUsed     Boolean  @default(false)
+
+  createdAt  DateTime @default(now())
+}
+
+model CompanyProfile {
+  id String @id @default(uuid())
+
+  userId String @unique
+  user User @relation(fields: [userId], references: [id])
+
+  specialization           String
+  city                     String
+  detailsLocation          String
+    commercialRegisterUrl  String
+  licenseUrl               String?
+  logoUrl                  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
