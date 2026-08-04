@@ -14,6 +14,18 @@ exports.register = async (data) => {
         data.phone
     );
 
+    // التحقق من عدم وجود البريد الإلكتروني (إذا تم إدخاله)
+    if (data.email) {
+
+        const userWithEmail = await userRepository.findByEmail(
+            data.email
+        );
+
+        if (userWithEmail) {
+            throw new Error("Email already exists");
+        }
+    }
+
     if (userWithPhone) {
         throw new Error("Phone already exists");
     }
@@ -37,9 +49,11 @@ exports.register = async (data) => {
     // إنشاء المستخدم
     const user = await userRepository.create({
         fullName: data.fullName,
+        email: data.email,
         phone: data.phone,
         password: hashedPassword,
         role: data.role,
+        howDidYouHear: data.howDidYouHear,
     });
 
     return user;

@@ -36,6 +36,10 @@ const forgotPasswordController = require("./forgotPassword.controller");
  *               fullName:
  *                 type: string
  *                 example: Ahmed Mohamed
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: ahmed@gmail.com
  *               phone:
  *                 type: string
  *                 example: "01273635463"
@@ -61,8 +65,6 @@ const forgotPasswordController = require("./forgotPassword.controller");
  *       400:
  *         description: Bad request
  */
-
-
 router.post(
     "/register",
     authController.register
