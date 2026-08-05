@@ -15,11 +15,9 @@ app.use(express.json());
 // Swagger
 // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(
-    "/api-docs",
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerSpec, {
-        customSiteTitle: "Fixit API Docs",
-    })
+  "/api-docs",
+  swaggerUi.serveFiles(swaggerSpec),
+  swaggerUi.setup(swaggerSpec)
 );
 console.log("Swagger loaded");
 
