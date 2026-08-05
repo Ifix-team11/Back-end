@@ -24,9 +24,6 @@ const options = {
 
 const swaggerSpec = swaggerJsdoc(options);
 
-console.log("Swagger generated:");
-console.log(swaggerSpec);
-
 module.exports = {
   swaggerUi,
   swaggerSpec,

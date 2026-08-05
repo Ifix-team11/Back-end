@@ -14,15 +14,19 @@ app.use(express.json());
 
 // Swagger
 // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// app.use(
+//   "/api-docs",
+//   swaggerUi.serve,
+//   swaggerUi.setup(swaggerSpec)
+// );
 app.use(
     "/api-docs",
     swaggerUi.serve,
     swaggerUi.setup(swaggerSpec, {
-        customCss: "",
-        customJs: [
-            "https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js",
-            "https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"
-        ]
+        swaggerOptions: {
+            docExpansion: "list",
+            defaultModelsExpandDepth: -1,
+        },
     })
 );
 console.log("Swagger loaded");
