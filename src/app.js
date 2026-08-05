@@ -13,22 +13,22 @@ app.use(express.json());
 
 
 // Swagger
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-// app.use(
-//   "/api-docs",
-//   swaggerUi.serve,
-//   swaggerUi.setup(swaggerSpec)
-// );
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(
-    "/api-docs",
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerSpec, {
-        swaggerOptions: {
-            docExpansion: "list",
-            defaultModelsExpandDepth: -1,
-        },
-    })
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec)
 );
+// app.use(
+//     "/api-docs",
+//     swaggerUi.serve,
+//     swaggerUi.setup(swaggerSpec, {
+//         swaggerOptions: {
+//             docExpansion: "list",
+//             defaultModelsExpandDepth: -1,
+//         },
+//     })
+// );
 console.log("Swagger loaded");
 
 // Auth Routes
