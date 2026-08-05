@@ -9,6 +9,15 @@ const options = {
       version: "1.0.0",
       description: "Fixit Backend API Documentation",
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
   },
   apis: ["./src/modules/**/*.routes.js"],
 };
