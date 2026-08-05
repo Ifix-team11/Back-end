@@ -13,12 +13,12 @@ const options = {
 
     servers: [
       {
-        url: "https://back-end-git-main-hagers-projects-df0172bd.vercel.app",
-        description: "Production Server",
-      },
-      {
         url: "http://localhost:3000",
         description: "Local Server",
+      },
+      {
+        url: "https://back-end-git-main-hagers-projects-df0172bd.vercel.app",
+        description: "Production Server",
       },
     ],
 
