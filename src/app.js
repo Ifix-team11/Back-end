@@ -14,7 +14,7 @@ app.use(express.json());
 
 // Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+console.log("Swagger loaded");
 
 // Auth Routes
 app.use("/api/auth", authRoutes);
