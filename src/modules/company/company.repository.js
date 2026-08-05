@@ -17,3 +17,17 @@ exports.create = async (data) => {
     });
 
 };
+
+exports.update = async (
+    userId,
+    data
+) => {
+
+    return await prisma.companyProfile.update({
+        where: {
+            userId,
+        },
+        data,
+    });
+
+};

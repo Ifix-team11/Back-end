@@ -87,4 +87,65 @@ router.post(
 );
 
 
+/**
+ * @swagger
+ * /api/companies/me:
+ *   put:
+ *     tags:
+ *       - Company
+ *     summary: Update company profile
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               specialization:
+ *                 type: string
+ *                 example: Electrical
+ *               city:
+ *                 type: string
+ *                 example: Cairo
+ *               detailsLocation:
+ *                 type: string
+ *                 example: Nasr City
+ *               commercialRegister:
+ *                 type: string
+ *                 format: binary
+ *               license:
+ *                 type: string
+ *                 format: binary
+ *               logo:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Company profile updated successfully
+ */
+
+
+router.put(
+    "/me",
+    protect,
+    upload.fields([
+        {
+            name: "commercialRegister",
+            maxCount: 1,
+        },
+        {
+            name: "license",
+            maxCount: 1,
+        },
+        {
+            name: "logo",
+            maxCount: 1,
+        },
+    ]),
+    companyController.updateProfile
+);
+
+
 module.exports = router;

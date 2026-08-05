@@ -60,3 +60,65 @@ exports.createProfile = async (
         logoUrl,
     });
 };
+
+exports.updateProfile = async (
+    userId,
+    data,
+    files
+) => {
+
+    const existingProfile =
+        await companyRepository.findByUserId(userId);
+
+
+    if (!existingProfile) {
+        throw new Error("Company profile not found");
+    }
+
+
+    let updateData = {
+        specialization: data.specialization,
+        city: data.city,
+        detailsLocation: data.detailsLocation,
+    };
+
+
+    if (files?.commercialRegister?.length) {
+
+        updateData.commercialRegisterUrl =
+            await uploadFile(
+                files.commercialRegister[0],
+                "company-documents"
+            );
+
+    }
+
+
+    if (files?.license?.length) {
+
+        updateData.licenseUrl =
+            await uploadFile(
+                files.license[0],
+                "company-documents"
+            );
+
+    }
+
+
+    if (files?.logo?.length) {
+
+        updateData.logoUrl =
+            await uploadFile(
+                files.logo[0],
+                "company-documents"
+            );
+
+    }
+
+
+    return await companyRepository.update(
+        userId,
+        updateData
+    );
+
+};

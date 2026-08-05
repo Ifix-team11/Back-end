@@ -1,4 +1,6 @@
 const express = require("express");
+const cors = require("cors");
+
 const { swaggerUi, swaggerSpec } = require("./config/swagger");
 
 const technicianRoutes = require("./modules/technician/technician.routes");
@@ -8,11 +10,27 @@ const authRoutes = require("./modules/auth/auth.routes");
 const app = express();
 
 
+// CORS
+app.use(cors({
+  origin: "*",
+  methods: [
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE",
+    "OPTIONS"
+  ],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization"
+  ]
+}));
+
+
 // Body Parser
 app.use(express.json());
 
 
-// Swagger
 // Swagger
 app.use(
   "/api-docs",
