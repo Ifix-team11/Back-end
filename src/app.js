@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const { swaggerUi, swaggerSpec } = require("./config/swagger");
 
 const technicianRoutes = require("./modules/technician/technician.routes");
@@ -13,23 +14,19 @@ app.use(express.json());
 
 
 // Swagger
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(
   "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec)
+  express.static(
+    path.join(__dirname, "../node_modules/swagger-ui-dist")
+  )
 );
-// app.use(
-//     "/api-docs",
-//     swaggerUi.serve,
-//     swaggerUi.setup(swaggerSpec, {
-//         swaggerOptions: {
-//             docExpansion: "list",
-//             defaultModelsExpandDepth: -1,
-//         },
-//     })
-// );
+
+app.get("/api-docs", (req, res) => {
+  res.send(swaggerUi.generateHTML(swaggerSpec));
+});
+
 console.log("Swagger loaded");
+
 
 // Auth Routes
 app.use("/api/auth", authRoutes);
@@ -41,5 +38,6 @@ app.use("/api/technicians", technicianRoutes);
 
 // Company Routes
 app.use("/api/companies", companyRoutes);
+
 
 module.exports = app;
