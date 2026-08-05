@@ -15,9 +15,15 @@ app.use(express.json());
 // Swagger
 // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(
-  "/api-docs",
-  swaggerUi.serveFiles(swaggerSpec),
-  swaggerUi.setup(swaggerSpec)
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+        customCss: "",
+        customJs: [
+            "https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js",
+            "https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"
+        ]
+    })
 );
 console.log("Swagger loaded");
 
