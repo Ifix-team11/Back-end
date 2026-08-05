@@ -13,7 +13,14 @@ app.use(express.json());
 
 
 // Swagger
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+        customSiteTitle: "Fixit API Docs",
+    })
+);
 console.log("Swagger loaded");
 
 // Auth Routes
