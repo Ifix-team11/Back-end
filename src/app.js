@@ -1,5 +1,4 @@
 const express = require("express");
-const path = require("path");
 const { swaggerUi, swaggerSpec } = require("./config/swagger");
 
 const technicianRoutes = require("./modules/technician/technician.routes");
@@ -16,14 +15,9 @@ app.use(express.json());
 // Swagger
 app.use(
   "/api-docs",
-  express.static(
-    path.join(__dirname, "../node_modules/swagger-ui-dist")
-  )
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec)
 );
-
-app.get("/api-docs", (req, res) => {
-  res.send(swaggerUi.generateHTML(swaggerSpec));
-});
 
 console.log("Swagger loaded");
 
