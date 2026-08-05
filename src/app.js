@@ -3,6 +3,7 @@ const { swaggerUi, swaggerSpec } = require("./config/swagger");
 
 const technicianRoutes = require("./modules/technician/technician.routes");
 const companyRoutes = require("./modules/company/company.routes");
+const authRoutes = require("./modules/auth/auth.routes");
 
 const app = express();
 
@@ -16,8 +17,6 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 // Auth Routes
-const authRoutes = require("./modules/auth/auth.routes");
-
 app.use("/api/auth", authRoutes);
 
 
@@ -27,6 +26,5 @@ app.use("/api/technicians", technicianRoutes);
 
 // Company Routes
 app.use("/api/companies", companyRoutes);
-
 
 module.exports = app;
