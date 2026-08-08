@@ -6,6 +6,7 @@ const { swaggerUi, swaggerSpec } = require("./config/swagger");
 const technicianRoutes = require("./modules/technician/technician.routes");
 const companyRoutes = require("./modules/company/company.routes");
 const authRoutes = require("./modules/auth/auth.routes");
+const orderRoutes = require("./modules/order/order.routes");
 
 const app = express();
 
@@ -58,6 +59,10 @@ app.use("/api/technicians", technicianRoutes);
 
 // Company Routes
 app.use("/api/companies", companyRoutes);
+
+
+// Order Routes
+app.use("/api/orders", orderRoutes);
 
 
 module.exports = app;

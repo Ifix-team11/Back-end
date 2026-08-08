@@ -18,6 +18,15 @@ enum Role {
   ADMIN
 }
 
+enum OrderStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
 model User {
   id            String  @id @default(uuid())
   fullName      String
@@ -27,10 +36,12 @@ model User {
   role          Role
   howDidYouHear String?
 
-  technician    Technician?
+  technician     Technician?
   companyProfile CompanyProfile?
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  orders         Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Technician {
@@ -46,32 +57,61 @@ model Technician {
   idCardImage           String
   graduationCertificate String
 
+  orders Order[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model PasswordResetOtp {
-  id         String   @id @default(uuid())
-  phone      String
-  otp        String
-  expiresAt  DateTime
-  isUsed     Boolean  @default(false)
+  id        String   @id @default(uuid())
+  phone     String
+  otp       String
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
 
-  createdAt  DateTime @default(now())
+  createdAt DateTime @default(now())
 }
 
 model CompanyProfile {
   id String @id @default(uuid())
 
   userId String @unique
-  user User @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 
-  specialization           String
-  city                     String
-  detailsLocation          String
-  commercialRegisterUrl  String
-  licenseUrl               String?
-  logoUrl                  String?
+  specialization        String
+  city                  String
+  detailsLocation       String
+  commercialRegisterUrl String
+  licenseUrl            String?
+  logoUrl               String?
+
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id String @id @default(uuid())
+
+  customerId String
+  customer   User   @relation(fields: [customerId], references: [id])
+
+  technicianId String?
+  technician   Technician? @relation(fields: [technicianId], references: [id])
+
+  companyId String?
+  company   CompanyProfile? @relation(fields: [companyId], references: [id])
+
+  serviceType        String
+  scheduledAt        DateTime
+  problemDescription String
+  images             String[]
+  voiceNoteUrl       String?
+
+  status          OrderStatus @default(PENDING)
+  rejectionReason String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
